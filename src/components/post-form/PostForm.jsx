@@ -125,7 +125,7 @@ export default function PostForm({ post }) {
             Image is required for new posts.
           </p>
         )}
-        {post && (
+        {/* {post && (
           <div className="w-full mb-4">
             <img
               src={appwriteService.getFileView(post.featuredImage)}
@@ -133,16 +133,22 @@ export default function PostForm({ post }) {
               className="rounded-lg"
             />
           </div>
-        )}
-        {watch("image")?.[0] && (
+        )} */}
+
+        {(watch("image")?.[0] || post) && (
           <div className="w-full mb-4">
             <img
-              src={URL.createObjectURL(watch("image")[0])}
+              src={
+                watch("image")?.[0]
+                  ? URL.createObjectURL(watch("image")[0])
+                  : appwriteService.getFileView(post.featuredImage)
+              }
               alt="Preview"
               className="rounded-lg"
             />
           </div>
         )}
+
         <Select
           options={["active", "inactive"]}
           label="Status"
