@@ -125,15 +125,6 @@ export default function PostForm({ post }) {
             Image is required for new posts.
           </p>
         )}
-        {/* {post && (
-          <div className="w-full mb-4">
-            <img
-              src={appwriteService.getFileView(post.featuredImage)}
-              alt={post.title}
-              className="rounded-lg"
-            />
-          </div>
-        )} */}
 
         {(watch("image")?.[0] || post) && (
           <div className="w-full mb-4">
