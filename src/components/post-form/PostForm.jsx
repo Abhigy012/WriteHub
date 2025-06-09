@@ -6,15 +6,22 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function PostForm({ post }) {
-  const { register, handleSubmit, watch, setValue, control, getValues } =
-    useForm({
-      defaultValues: {
-        title: post?.title || "",
-        slug: post?.$id || "",
-        content: post?.content || "",
-        status: post?.status || "active",
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    control,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: post?.title || "",
+      slug: post?.$id || "",
+      content: post?.content || "",
+      status: post?.status || "active",
+    },
+  });
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
@@ -42,7 +49,6 @@ export default function PostForm({ post }) {
 
       if (file) {
         const fileId = file.$id;
-        console.log(fileId);
         data.featuredImage = fileId;
         const dbPost = await appwriteService.createPost({
           ...data,
@@ -51,6 +57,8 @@ export default function PostForm({ post }) {
 
         if (dbPost) {
           navigate(`/post/${dbPost.$id}`);
+        } else {
+          console.error("Some error happened in creating the given post");
         }
       }
     }
@@ -112,6 +120,11 @@ export default function PostForm({ post }) {
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
         />
+        {errors.image && (
+          <p className="mt-1 text-sm text-red-500">
+            Image is required for new posts.
+          </p>
+        )}
         {post && (
           <div className="w-full mb-4">
             <img
@@ -138,8 +151,7 @@ export default function PostForm({ post }) {
         />
         <Button
           type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
+          className={`w-full ${post ? "bg-green-500" : "bg-[#6366f1]"}`}
         >
           {post ? "Update" : "Submit"}
         </Button>
