@@ -1,56 +1,19 @@
 import React from 'react'
-import {Editor } from '@tinymce/tinymce-react';
-import {Controller } from 'react-hook-form';
 
-
-export default function RTE({name, control, label, defaultValue =""}) {
+export default function RTE({ name, value, onChange, label, defaultValue = "" }) {
   return (
     <div className='w-full'> 
-    {label && <label className='inline-block pl-1 mb-1'>{label}</label>}
-
-    <Controller
-    name={name || "content"}
-    control={control}
-    render={({field: {onChange}}) => (
-        <Editor
-        apiKey="9vdnkk376nzducutrrcptnt95dlzo6yhtp9dp9r47iw3nimj"
-        initialValue={defaultValue}
-        init={{
-            initialValue: defaultValue,
-            height: 500,
-            menubar: true,
-            plugins: [
-                "image",
-                "advlist",
-                "autolink",
-                "lists",
-                "link",
-                "image",
-                "charmap",
-                "preview",
-                "anchor",
-                "searchreplace",
-                "visualblocks",
-                "code",
-                "fullscreen",
-                "insertdatetime",
-                "media",
-                "table",
-                "code",
-                "help",
-                "wordcount",
-                "anchor",
-            ],
-            toolbar:
-            "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
-            content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
-        }}
-        onEditorChange={onChange}
-        />
-    )}
-    />
-
-     </div>
+      {label && <label className='inline-block pl-1 mb-1'>{label}</label>}
+      
+      <textarea
+        name={name || "content"}
+        value={value || defaultValue}
+        onChange={onChange}
+        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        rows={15}
+        placeholder="Write your post content here..."
+      />
+    </div>
   )
 }
 

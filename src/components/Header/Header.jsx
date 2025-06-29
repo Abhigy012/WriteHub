@@ -1,11 +1,9 @@
 import React from "react";
-import { Container, Logo, LogoutBtn } from "../index";
+import { Container, Logo } from "../index";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import LogoutBtn from "./LogoutBtn";
 
-function Header() {
-  const authStatus = useSelector((state) => state.auth.status);
-
+function Header({ user, onLogout }) {
   const navItems = [
     {
       name: "Home",
@@ -15,22 +13,22 @@ function Header() {
     {
       name: "Login",
       slug: "/login",
-      active: !authStatus,
+      active: !user,
     },
     {
       name: "Signup",
       slug: "/signup",
-      active: !authStatus,
+      active: !user,
     },
     {
       name: "All Posts",
       slug: "/all-posts",
-      active: authStatus,
+      active: !!user,
     },
     {
       name: "Add Post",
       slug: "/add-post",
-      active: authStatus,
+      active: !!user,
     },
   ];
 
@@ -56,9 +54,9 @@ function Header() {
                 </li>
               ) : null
             )}
-            {authStatus && (
+            {user && (
               <li>
-                <LogoutBtn />
+                <LogoutBtn onLogout={onLogout} />
               </li>
             )}
           </ul>

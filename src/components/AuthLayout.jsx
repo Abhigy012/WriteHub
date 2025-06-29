@@ -1,22 +1,42 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { authAPI } from '../services/api.js'
 
 export default function Protected({ children, authentication = true }) {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
-  const isLoggedIn = useSelector((state) => state.auth.status)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    const shouldRedirect =
-      (authentication && !isLoggedIn) || (!authentication && isLoggedIn)
-
-    if (shouldRedirect) {
-      navigate(authentication ? '/login' : '/')
-    } else {
-      setLoading(false)
+    const checkAuth = async () => {
+      try {
+        // Try to get current user from server
+        const user = await authAPI.getCurrentUser()
+        setIsLoggedIn(true)
+        
+        const shouldRedirect = !authentication // If not requiring auth but user is logged in
+        
+        if (shouldRedirect) {
+          navigate('/')
+        } else {
+          setLoading(false)
+        }
+      } catch (error) {
+        // User is not authenticated
+        setIsLoggedIn(false)
+        
+        const shouldRedirect = authentication // If requiring auth but user is not logged in
+        
+        if (shouldRedirect) {
+          navigate('/login')
+        } else {
+          setLoading(false)
+        }
+      }
     }
-  }, [isLoggedIn, navigate, authentication])
+
+    checkAuth()
+  }, [navigate, authentication])
 
   return loading ? <h1>Loading...</h1> : <>{children}</>
 }

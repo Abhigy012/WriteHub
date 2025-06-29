@@ -1,50 +1,111 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
-import parse from "html-react-parser";
-import { useSelector } from "react-redux";
 
 export default function Post() {
   const [post, setPost] = useState(null);
-  const { slug } = useParams();
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const userData = useSelector((state) => state.auth.userData);
-
-  const isAuthor = post && userData ? post.userId === userData.$id : false;
+  // Get user data from localStorage
+  const userData = JSON.parse(localStorage.getItem('user') || 'null');
+  const isAuthor = post && userData ? post.author._id === userData._id : false;
 
   useEffect(() => {
-    if (slug) {
-      appwriteService.getPost(slug).then((post) => {
-        if (post) setPost(post);
-        else navigate("/");
+    if (!id) {
+      navigate("/");
+      return;
+    }
+    
+    // Create AbortController to cancel previous requests
+    const abortController = new AbortController();
+    
+    fetch(`http://localhost:5000/api/posts/${id}`, {
+      signal: abortController.signal
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Post not found');
+        }
+        return res.json();
+      })
+      .then(data => {
+        setPost(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        if (err.name === 'AbortError') {
+          return;
+        }
+        console.error('Error fetching post:', err);
+        navigate("/");
       });
-    } else navigate("/");
-  }, [slug, navigate]);
+
+    // Cleanup function to abort request if component unmounts or id changes
+    return () => {
+      abortController.abort();
+    };
+  }, [id, navigate]);
 
   const deletePost = () => {
-    appwriteService.deletePost(post.$id).then((status) => {
-      if (status) {
-        appwriteService.deleteFile(post.featuredImage);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    fetch(`http://localhost:5000/api/posts/${post._id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.message) {
         navigate("/");
       }
+    })
+    .catch(err => {
+      console.error('Error deleting post:', err);
     });
   };
 
-  return post ? (
+  if (loading) {
+    return (
+      <div className="py-8">
+        <Container>
+          <div className="text-center">Loading...</div>
+        </Container>
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="py-8">
+        <Container>
+          <div className="text-center">Post not found</div>
+        </Container>
+      </div>
+    );
+  }
+
+  return (
     <div className="py-8">
       <Container>
         <div className="relative flex justify-center w-full p-2 mb-4 border rounded-xl">
           <img
-            src={appwriteService.getFileView(post.featuredImage)}
+            src={`http://localhost:5000/api/posts/image/${post.featuredImage}`}
             alt={post.title}
             className="object-cover w-full h-64 max-w-4xl mx-auto md:h-80 rounded-xl"
           />
 
           {isAuthor && (
             <div className="absolute right-6 top-6">
-              <Link to={`/edit-post/${post.$id}`}>
+              <Link to={`/edit-post/${post._id}`}>
                 <Button className="mr-3 bg-green-500">Edit</Button>
               </Link>
               <Button className="bg-red-500" onClick={deletePost}>
@@ -55,9 +116,14 @@ export default function Post() {
         </div>
         <div className="w-full mb-6">
           <h1 className="text-2xl font-bold">{post.title}</h1>
+          <p className="text-gray-600 mt-2">
+            By {post.author?.name || 'Unknown'} • {new Date(post.createdAt).toLocaleDateString()}
+          </p>
         </div>
-        <div className="browser-css">{parse(post.content)}</div>
+        <div className="prose max-w-none">
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        </div>
       </Container>
     </div>
-  ) : null;
+  );
 }

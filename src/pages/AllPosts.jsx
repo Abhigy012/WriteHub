@@ -1,18 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { Container, PostCard } from "../components";
-import appwriteService from "../appwrite/config";
+import { postsAPI } from "../services/api.js";
 import { Link } from "react-router-dom";
 
 function AllPosts() {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    appwriteService.getPosts([]).then((posts) => {
-      if (posts) {
-        setPosts(posts.documents);
+    const fetchPosts = async () => {
+      setLoading(true);
+      try {
+        const response = await postsAPI.getAllPosts();
+        setPosts(response.posts || []);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false);
       }
-    });
+    };
+
+    fetchPosts();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full py-8">
+        <Container>
+          <div className="flex items-center justify-center min-h-96">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+          </div>
+        </Container>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full py-8">
@@ -20,7 +41,7 @@ function AllPosts() {
         {posts.length > 0 ? (
           <div className="flex flex-wrap">
             {posts.map((post) => (
-              <div key={post.$id} className="w-full p-2 sm:w-1/2 lg:w-1/4">
+              <div key={post._id} className="w-full p-2 sm:w-1/2 lg:w-1/4">
                 <PostCard {...post} />
               </div>
             ))}

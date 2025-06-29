@@ -1,9 +1,9 @@
 import React from "react";
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import Logo from "../Logo";
 
 // Mock components for demonstration
-const Link = ({ to, className, children, ...props }) => (
+const LinkMock = ({ to, className, children, ...props }) => (
   <a href={to} className={className} {...props}>
     {children}
   </a>

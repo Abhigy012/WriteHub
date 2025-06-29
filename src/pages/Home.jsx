@@ -1,78 +1,64 @@
 import React, { useEffect, useState } from "react";
-import appwriteService from "../appwrite/config";
+import { postsAPI } from "../services/api.js";
 import { Container, PostCard } from "../components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 function Home() {
   const [posts, setPosts] = useState([]);
-  const authStatus = useSelector((state) => state.auth.status);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (authStatus) {
-      appwriteService
-        .getPosts()
-        .then((posts) => {
-          if (posts) {
-            setPosts(posts.documents);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching posts:", error);
-        });
-    }
-  }, [authStatus]);
+    const fetchPosts = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await postsAPI.getAllPosts();
+        setPosts(response.posts || []);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+        setError("Failed to load posts. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Not logged in view
-  if (!authStatus) {
+    fetchPosts();
+  }, []);
+
+  // Loading state
+  if (loading) {
     return (
       <div className="w-full py-16 bg-gradient-to-br from-slate-50 to-gray-100">
         <Container>
           <div className="flex items-center justify-center min-h-96">
-            <div className="max-w-lg mx-auto text-center">
-              <div className="p-12 border shadow-xl bg-white/80 backdrop-blur-sm rounded-3xl border-white/20">
-                <div className="flex items-center justify-center w-20 h-20 mx-auto mb-6 shadow-lg bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl">
-                  <svg
-                    className="w-10 h-10 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                    />
-                  </svg>
-                </div>
-                <h1 className="mb-4 text-3xl font-bold text-transparent bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text">
-                  Welcome to Our Stories
-                </h1>
-                <p className="mb-8 text-lg leading-relaxed text-gray-600">
-                  Login to discover amazing posts and join our community of
-                  writers and readers.
-                </p>
-                <Link
-                  to="/signup"
-                  className="inline-flex items-center px-6 py-3 font-semibold text-white transition-all duration-300 transform shadow-lg cursor-pointer bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl hover:shadow-xl hover:scale-105"
-                >
-                  <span>Get Started</span>
-                  <svg
-                    className="w-5 h-5 ml-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </Link>
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+          </div>
+        </Container>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="w-full py-16 bg-gradient-to-br from-slate-50 to-gray-100">
+        <Container>
+          <div className="flex items-center justify-center min-h-96">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 text-red-500">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
               </div>
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">Oops! Something went wrong</h2>
+              <p className="text-gray-600 mb-4">{error}</p>
+              <button 
+                onClick={() => window.location.reload()} 
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              >
+                Try Again
+              </button>
             </div>
           </div>
         </Container>
@@ -80,8 +66,8 @@ function Home() {
     );
   }
 
-  // Logged in but no posts
-  if (authStatus && posts.length === 0) {
+  // No posts
+  if (posts.length === 0) {
     return (
       <div className="w-full py-8">
         <Container>
@@ -135,7 +121,7 @@ function Home() {
     );
   }
 
-  // Logged in and posts available
+  // Posts available
   return (
     <div className="w-full py-16 bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50">
       <Container>
@@ -155,7 +141,7 @@ function Home() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {posts.map((post) => (
             <div
-              key={post.$id}
+              key={post._id}
               className="relative transition-all duration-300 transform group hover:scale-105 hover:z-10"
             >
               <div className="overflow-hidden transition-all duration-300 border shadow-lg bg-white/70 backdrop-blur-sm rounded-2xl hover:shadow-2xl border-white/50 group-hover:bg-white/90">

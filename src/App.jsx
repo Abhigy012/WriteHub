@@ -1,38 +1,59 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import './App.css'
-import authService from "./appwrite/auth"
-import {login, logout} from "./store/authSlice"
+import { authAPI } from "./services/api.js"
 import { Footer, Header } from './components'
 import { Outlet } from 'react-router-dom'
 
 function App() {
   const [loading, setLoading] = useState(true)
-  const dispatch = useDispatch()
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
-    authService.getCurrentUser()
-    .then((userData) => {
-      if (userData) {
-        dispatch(login({userData}))
-      } else {
-        dispatch(logout())
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const userData = await authAPI.getCurrentUser();
+          setUser(userData);
+        } catch (error) {
+          localStorage.removeItem('token');
+        }
       }
-    })
-    .finally(() => setLoading(false))
-  }, [])
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, []);
   
-  return !loading ? (
+  const logout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  const contextValue = {
+    user,
+    setUser
+  };
+
+  return (
     <div className='flex flex-wrap content-between min-h-screen'>
       <div className='block w-full'>
-        <Header />
+        <Header user={user} onLogout={logout} />
         <main>
-        <Outlet />
+          <Outlet context={contextValue} />
         </main>
         <Footer />
       </div>
     </div>
-  ) : null
+  )
 }
 
 export default App
