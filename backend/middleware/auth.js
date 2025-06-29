@@ -10,6 +10,11 @@ export const protect = async (req, res, next) => {
     if (req.cookies && req.cookies.token) {
       token = req.cookies.token;
     }
+    
+    // Get token from Authorization header
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
 
     if (!token) {
       return res.status(401).json({ message: 'Not authorized, no token' });
@@ -40,6 +45,11 @@ export const isLoggedIn = async (req, res, next) => {
     // Get token from cookies
     if (req.cookies && req.cookies.token) {
       token = req.cookies.token;
+    }
+    
+    // Get token from Authorization header
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
     }
 
     if (token) {

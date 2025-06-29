@@ -51,7 +51,8 @@ router.post('/register', async (req, res) => {
       res.status(201).json({
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        token: token // Include token in response for localStorage
       });
     } else {
       res.status(400).json({ message: 'Invalid user data' });
@@ -101,7 +102,8 @@ router.post('/login', async (req, res) => {
     res.json({
       _id: user._id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      token: token // Include token in response for localStorage
     });
   } catch (error) {
     console.error('Login error:', error);

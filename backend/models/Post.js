@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['active', 'inactive'],
+    enum: ['active', 'inactive', 'draft'],
     default: 'active'
   },
   author: {
@@ -24,6 +24,14 @@ const postSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  category: {
+    type: String,
+    default: 'General'
+  },
+  tags: [{
+    type: String,
+    trim: true
+  }],
   views: {
     type: Number,
     default: 0

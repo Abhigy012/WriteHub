@@ -8,6 +8,15 @@ const apiRequest = async (endpoint, options = {}) => {
     ...options,
   };
 
+  // Add Authorization header if token exists in localStorage
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers = {
+      ...config.headers,
+      'Authorization': `Bearer ${token}`
+    };
+  }
+
   try {
     console.log('Making API request to:', url);
     const response = await fetch(url, config);
@@ -31,31 +40,50 @@ const apiRequest = async (endpoint, options = {}) => {
 export const authAPI = {
   // Register user
   register: async (userData) => {
-    return apiRequest('/auth/register', {
+    const response = await apiRequest('/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
     });
+    
+    // Store token in localStorage if provided
+    if (response.token) {
+      localStorage.setItem('token', response.token);
+    }
+    
+    return response;
   },
 
   // Login user
   login: async (credentials) => {
-    return apiRequest('/auth/login', {
+    const response = await apiRequest('/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(credentials),
     });
+    
+    // Store token in localStorage if provided
+    if (response.token) {
+      localStorage.setItem('token', response.token);
+    }
+    
+    return response;
   },
 
   // Logout user
   logout: async () => {
-    return apiRequest('/auth/logout', {
+    const response = await apiRequest('/auth/logout', {
       method: 'POST',
     });
+    
+    // Remove token from localStorage
+    localStorage.removeItem('token');
+    
+    return response;
   },
 
   // Get current user
@@ -93,6 +121,9 @@ export const postsAPI = {
     const response = await fetch(`${API_BASE_URL}/posts`, {
       method: 'POST',
       credentials: 'include',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
       body: postData, // postData is already FormData
     });
 
@@ -109,6 +140,9 @@ export const postsAPI = {
     const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
       method: 'PUT',
       credentials: 'include',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
       body: postData, // postData is already FormData
     });
 
@@ -150,6 +184,9 @@ export const uploadImage = async (file) => {
   const response = await fetch(`${API_BASE_URL}/posts`, {
     method: 'POST',
     credentials: 'include',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
     body: formData,
   });
 

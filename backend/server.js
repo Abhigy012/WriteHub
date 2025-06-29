@@ -20,10 +20,17 @@ const __dirname = path.dirname(__filename);
 // CORS configuration for production and development
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL] // Use environment variable for frontend URL
+    ? [
+        process.env.FRONTEND_URL,
+        'https://write-hub-pi.vercel.app',
+        'https://writehub-frontend.vercel.app',
+        'https://writehub.vercel.app'
+      ].filter(Boolean) // Remove undefined values
     : ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
 };
 
 // Middleware
