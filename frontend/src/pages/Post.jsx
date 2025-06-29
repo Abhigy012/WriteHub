@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Container } from "../components";
+import { postsAPI, getImageUrl } from "../services/api";
 
 export default function Post() {
   const [post, setPost] = useState(null);
@@ -21,15 +22,7 @@ export default function Post() {
     // Create AbortController to cancel previous requests
     const abortController = new AbortController();
     
-    fetch(`http://localhost:5000/api/posts/${id}`, {
-      signal: abortController.signal
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Post not found');
-        }
-        return res.json();
-      })
+    postsAPI.getPost(id)
       .then(data => {
         setPost(data);
         setLoading(false);
@@ -55,14 +48,7 @@ export default function Post() {
       return;
     }
 
-    fetch(`http://localhost:5000/api/posts/${post._id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(res => res.json())
+    postsAPI.deletePost(post._id)
     .then(data => {
       if (data.message) {
         navigate("/");
@@ -98,7 +84,7 @@ export default function Post() {
       <Container>
         <div className="relative flex justify-center w-full p-2 mb-4 border rounded-xl">
           <img
-            src={`http://localhost:5000/api/posts/image/${post.featuredImage}`}
+            src={getImageUrl(post.featuredImage)}
             alt={post.title}
             className="object-cover w-full h-64 max-w-4xl mx-auto md:h-80 rounded-xl"
           />

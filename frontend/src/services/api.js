@@ -21,7 +21,7 @@ const apiRequest = async (endpoint, options = {}) => {
   } catch (error) {
     console.error('API Request Error:', error);
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      throw new Error('Network error: Please check if the backend server is running on http://localhost:5000');
+      throw new Error(`Network error: Please check if the backend server is running on ${API_BASE_URL}`);
     }
     throw error;
   }
