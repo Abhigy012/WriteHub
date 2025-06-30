@@ -60,6 +60,11 @@ app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend is working!' });
 });
 
+// Add /api root route
+app.get('/api', (req, res) => {
+  res.json({ message: 'API is running' });
+});
+
 // Connect to MongoDB
 const connectDB = async () => {
   try {
