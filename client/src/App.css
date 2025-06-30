@@ -1,0 +1,141 @@
+#root {
+  max-width: screen;
+  text-align: center;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Browser CSS for parsed HTML content */
+.browser-css {
+  line-height: 1.6;
+  color: #333;
+}
+
+.browser-css h1,
+.browser-css h2,
+.browser-css h3,
+.browser-css h4,
+.browser-css h5,
+.browser-css h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.browser-css h1 {
+  font-size: 2em;
+}
+
+.browser-css h2 {
+  font-size: 1.5em;
+}
+
+.browser-css h3 {
+  font-size: 1.25em;
+}
+
+.browser-css p {
+  margin-bottom: 1em;
+}
+
+.browser-css ul,
+.browser-css ol {
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+.browser-css li {
+  margin-bottom: 0.5em;
+}
+
+.browser-css blockquote {
+  border-left: 4px solid #6366f1;
+  padding-left: 1em;
+  margin: 1em 0;
+  font-style: italic;
+  color: #666;
+}
+
+.browser-css code {
+  background-color: #f3f4f6;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.browser-css pre {
+  background-color: #f3f4f6;
+  padding: 1em;
+  border-radius: 0.5em;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.browser-css pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.browser-css a {
+  color: #6366f1;
+  text-decoration: underline;
+}
+
+.browser-css a:hover {
+  color: #4338ca;
+}
+
+.browser-css img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5em;
+  margin: 1em 0;
+}
+
+.browser-css table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.browser-css th,
+.browser-css td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5em;
+  text-align: left;
+}
+
+.browser-css th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
