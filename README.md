@@ -1,6 +1,6 @@
 # WriteHub
 
-![WriteHub Logo](./client/src/assets/WriteHub.png)
+<img src="./client/src/assets/WriteHub.png" alt="WriteHub Logo" width="50" />
 
 ## Tech Stack Used
 
@@ -40,9 +40,6 @@ project-root/
 ```
 
 ## Screenshots
-
-### Landing Page
-![Landing Hero](./client/public/images/landing-hero.jpg)
 
 ### Application Screenshots
 
