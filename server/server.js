@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 
 // Import routes
 import authRoutes from './routes/auth.js';
@@ -36,11 +37,15 @@ const corsOptions = {
 // Middleware
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use(compression()); // Enable gzip compression
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Serve uploaded images
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Add caching headers for static assets
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+  maxAge: '1d', // Cache for 1 day
+  etag: true
+}));
 
 // Health check endpoint
 app.get('/health', (req, res) => {

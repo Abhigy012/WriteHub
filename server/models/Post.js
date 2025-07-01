@@ -48,4 +48,10 @@ const postSchema = new mongoose.Schema({
   timestamps: true
 });
 
+// Add indexes for better query performance
+postSchema.index({ status: 1, createdAt: -1 }); // For getting active posts sorted by date
+postSchema.index({ author: 1 }); // For getting posts by author
+postSchema.index({ views: -1 }); // For getting popular posts
+postSchema.index({ title: 'text', content: 'text' }); // For text search
+
 export default mongoose.model('Post', postSchema); 

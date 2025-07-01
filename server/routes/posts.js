@@ -22,10 +22,12 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.get('/', async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 0;
-    const posts = await Post.find()
-      .populate('author', 'name email')
+    const posts = await Post.find({ status: 'active' })
+      .select('title content featuredImage author createdAt views')
+      .populate('author', 'name')
       .sort({ createdAt: -1 })
-      .limit(limit);
+      .limit(limit)
+      .lean(); // Convert to plain JavaScript objects for faster processing
     res.json({ posts });
   } catch (err) {
     console.log(err);
