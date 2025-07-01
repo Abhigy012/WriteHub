@@ -47,21 +47,21 @@ project-root/
 ### Application Screenshots
 
 #### Home Page
-![Home Page](./screenshots/home-page.png)
+<img src="./screenshots/home-page.png" alt="Home Page" width="500" />
 *Main dashboard showing latest blog posts*
 
 #### All Posts
-![All Posts](./screenshots/all-posts.png)
+<img src="./screenshots/all-posts.png" alt="All Posts" width="500" />
 *Complete list of all published blog posts*
 
 #### Post Details
-![Post Details](./screenshots/post-details.png)
+<img src="./screenshots/post-details.png" alt="Post Details" width="500" />
 *Individual blog post view with full content*
 
 #### Create Post
-![Create Post](./screenshots/create-post.png)
+<img src="./screenshots/create-post.png" alt="Create Post" width="500" />
 *Form for creating and editing blog posts*
 
 #### Sign Up
-![Sign Up](./screenshots/sign-up.png)
+<img src="./screenshots/sign-up.png" alt="Sign Up" width="500" />
 *User registration page*
