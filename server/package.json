@@ -1,7 +1,7 @@
 {
-  "name": "megablog-backend",
+  "name": "writehub-backend",
   "version": "1.0.0",
-  "description": "MegaBlog Backend API",
+  "description": "WriteHub Backend API",
   "main": "server.js",
   "type": "module",
   "scripts": {

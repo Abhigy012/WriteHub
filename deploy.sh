@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# MegaBlog Deployment Script
-# This script helps automate the deployment process
+# WriteHub Deployment Script
+# This script helps deploy the WriteHub MERN stack application
 
-echo "🚀 MegaBlog Deployment Script"
+echo "🚀 WriteHub Deployment Script"
 echo "=============================="
 
 # Colors for output

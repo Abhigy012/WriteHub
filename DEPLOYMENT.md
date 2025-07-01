@@ -1,6 +1,6 @@
-# MegaBlog Deployment Guide
+# WriteHub Deployment Guide
 
-This guide covers deploying your MegaBlog MERN stack application to various platforms.
+This guide covers deploying your WriteHub MERN stack application to various platforms.
 
 ## 🚀 Quick Deploy Options
 
@@ -35,7 +35,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
 3. **Test Connection**
    ```bash
    # Your connection string should look like:
-   mongodb+srv://username:password@cluster.mongodb.net/megablog
+   mongodb+srv://username:password@cluster.mongodb.net/writehub
    ```
 
 ---
@@ -51,7 +51,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
    git add .
    git commit -m "Initial backend commit"
    git branch -M main
-   git remote add origin https://github.com/yourusername/megablog-backend.git
+   git remote add origin https://github.com/yourusername/writehub-backend.git
    git push -u origin main
    ```
 
@@ -61,7 +61,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
    - Click "New Web Service"
    - Connect your backend repository
    - Configure:
-     - **Name**: `megablog-backend`
+     - **Name**: `writehub-backend`
      - **Environment**: `Node`
      - **Build Command**: `npm install`
      - **Start Command**: `npm start`
@@ -69,7 +69,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
 
 3. **Set Environment Variables in Render**
    ```
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/megablog
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/writehub
    JWT_SECRET=your_super_secret_jwt_key_here_make_it_long_and_random
    NODE_ENV=production
    PORT=5000
@@ -79,7 +79,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
 4. **Deploy and Get Backend URL**
    - Click "Create Web Service"
    - Wait for deployment
-   - Copy the URL (e.g., `https://megablog-backend.onrender.com`)
+   - Copy the URL (e.g., `https://writehub-backend.onrender.com`)
 
 ### Option B: Heroku
 
@@ -91,8 +91,8 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
 2. **Deploy to Heroku**
    ```bash
    cd backend
-   heroku create megablog-backend
-   heroku config:set MONGODB_URI="mongodb+srv://username:password@cluster.mongodb.net/megablog"
+   heroku create writehub-backend
+   heroku config:set MONGODB_URI="mongodb+srv://username:password@cluster.mongodb.net/writehub"
    heroku config:set JWT_SECRET="your_super_secret_jwt_key_here"
    heroku config:set NODE_ENV="production"
    heroku config:set FRONTEND_URL="https://your-frontend-domain.vercel.app"
@@ -109,7 +109,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
    - Create `.env` file in root directory:
    ```
    VITE_API_URL=https://your-backend-url.onrender.com/api
-   VITE_APP_NAME=MegaBlog
+   VITE_APP_NAME=WriteHub
    ```
 
 2. **Push Frontend to GitHub**
@@ -119,7 +119,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
    git add .
    git commit -m "Initial frontend commit"
    git branch -M main
-   git remote add origin https://github.com/yourusername/megablog-frontend.git
+   git remote add origin https://github.com/yourusername/writehub-frontend.git
    git push -u origin main
    ```
 
@@ -137,7 +137,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
 4. **Set Environment Variables in Vercel**
    ```
    VITE_API_URL=https://your-backend-url.onrender.com/api
-   VITE_APP_NAME=MegaBlog
+   VITE_APP_NAME=WriteHub
    ```
 
 5. **Deploy**
@@ -161,7 +161,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
    - Add:
      ```
      VITE_API_URL=https://your-backend-url.onrender.com/api
-     VITE_APP_NAME=MegaBlog
+     VITE_APP_NAME=WriteHub
      ```
 
 ---
@@ -181,7 +181,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
    ```
 
 3. **Verify Admin Login**
-   - Email: `admin@megablog.com`
+   - Email: `admin@writehub.com`
    - Password: `admin123`
 
 ---
@@ -212,7 +212,7 @@ This guide covers deploying your MegaBlog MERN stack application to various plat
 ```env
 PORT=5000
 NODE_ENV=production
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/megablog
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/writehub
 JWT_SECRET=your_super_secret_jwt_key_here
 FRONTEND_URL=https://your-frontend-domain.vercel.app
 ```
@@ -220,7 +220,7 @@ FRONTEND_URL=https://your-frontend-domain.vercel.app
 ### Frontend (.env)
 ```env
 VITE_API_URL=https://your-backend-url.onrender.com/api
-VITE_APP_NAME=MegaBlog
+VITE_APP_NAME=WriteHub
 ```
 
 ---
@@ -324,12 +324,12 @@ jobs:
 
 ## 🎉 Success!
 
-Your MegaBlog is now deployed and live! 
+Your WriteHub is now deployed and live! 
 
 **Your URLs:**
 - **Frontend**: https://your-blog.vercel.app
 - **Backend**: https://your-backend.onrender.com
-- **Admin Login**: admin@megablog.com / admin123
+- **Admin Login**: admin@writehub.com / admin123
 
 **Next Steps:**
 1. Customize your blog content

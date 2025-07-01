@@ -1,6 +1,6 @@
-# MegaBlog Backend
+# WriteHub Backend
 
-Node.js/Express backend API for the MegaBlog application with MongoDB database.
+Node.js/Express backend API for the WriteHub application with MongoDB database.
 
 ## 🚀 Quick Start
 
@@ -274,4 +274,4 @@ After deploying the backend:
 
 ## 📄 License
 
-This project is part of the MegaBlog application and is licensed under the MIT License. 
+This project is part of the WriteHub application and is licensed under the MIT License. 

@@ -1,6 +1,6 @@
-# MegaBlog Deployment Guide
+# WriteHub Deployment Guide
 
-This guide will help you deploy your MegaBlog project with the existing 6 posts.
+This guide will help you deploy your WriteHub project with the existing 6 posts.
 
 ## Prerequisites
 - GitHub account
@@ -29,7 +29,7 @@ This guide will help you deploy your MegaBlog project with the existing 6 posts.
    git add .
    git commit -m "Initial backend commit"
    git branch -M main
-   git remote add origin https://github.com/yourusername/megablog-backend.git
+   git remote add origin https://github.com/yourusername/writehub-backend.git
    git push -u origin main
    ```
 
@@ -39,7 +39,7 @@ This guide will help you deploy your MegaBlog project with the existing 6 posts.
    - Click "New Web Service"
    - Connect your backend repository
    - Configure:
-     - **Name**: megablog-backend
+     - **Name**: writehub-backend
      - **Environment**: Node
      - **Build Command**: `npm install`
      - **Start Command**: `npm start`
@@ -49,7 +49,7 @@ This guide will help you deploy your MegaBlog project with the existing 6 posts.
    - Go to your service settings
    - Add environment variables:
      ```
-     MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/megablog
+     MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/writehub
      JWT_SECRET=your_super_secret_jwt_key_here
      NODE_ENV=production
      PORT=5000
@@ -58,7 +58,7 @@ This guide will help you deploy your MegaBlog project with the existing 6 posts.
 4. **Deploy and Get Backend URL**
    - Click "Create Web Service"
    - Wait for deployment
-   - Copy the URL (e.g., `https://megablog-backend.onrender.com`)
+   - Copy the URL (e.g., `https://writehub-backend.onrender.com`)
 
 ## Step 3: Frontend Deployment (Vercel)
 
@@ -75,7 +75,7 @@ This guide will help you deploy your MegaBlog project with the existing 6 posts.
    git add .
    git commit -m "Initial frontend commit"
    git branch -M main
-   git remote add origin https://github.com/yourusername/megablog-frontend.git
+   git remote add origin https://github.com/yourusername/writehub-frontend.git
    git push -u origin main
    ```
 
@@ -107,7 +107,7 @@ This guide will help you deploy your MegaBlog project with the existing 6 posts.
 1. **Test Admin Login**
    - Go to your deployed frontend URL
    - Login with:
-     - Email: `admin@megablog.com`
+     - Email: `admin@writehub.com`
      - Password: `admin123`
 
 2. **Verify Posts**
@@ -142,7 +142,7 @@ This guide will help you deploy your MegaBlog project with the existing 6 posts.
 ## Your Live Blog URLs:
 - **Frontend**: https://your-blog.vercel.app
 - **Backend**: https://your-backend.onrender.com
-- **Admin Login**: admin@megablog.com / admin123
+- **Admin Login**: admin@writehub.com / admin123
 
 ## Maintenance:
 - Monitor your Render and Vercel dashboards

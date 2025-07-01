@@ -1,4 +1,5 @@
 {
+  "name": "WriteHub",
   "dependencies": {
     "cloudinary": "^2.7.0"
   }

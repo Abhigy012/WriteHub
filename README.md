@@ -1,10 +1,15 @@
-# MERN Blog Project
+# WriteHub
+
+![WriteHub Logo](./client/src/assets/WriteHub.png)
 
 ## Tech Stack Used
-- MongoDB
-- Express.js
-- React.js
-- Node.js
+
+<div align="center">
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js" />
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React.js" />
+  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+</div>
 
 ## Features
 - Create, Read, Update, Delete (CRUD) blog posts
@@ -36,10 +41,27 @@ project-root/
 
 ## Screenshots
 
-- Home page (shows latest posts)
-- All Posts page (shows all posts)
-- Post detail page
-- Create/Edit post form
-- Login/Signup page
+### Landing Page
+![Landing Hero](./client/public/images/landing-hero.jpg)
 
-(Replace this text with screenshots if needed)
+### Application Screenshots
+
+#### Home Page
+![Home Page](./screenshots/home-page.png)
+*Main dashboard showing latest blog posts*
+
+#### All Posts
+![All Posts](./screenshots/all-posts.png)
+*Complete list of all published blog posts*
+
+#### Post Details
+![Post Details](./screenshots/post-details.png)
+*Individual blog post view with full content*
+
+#### Create Post
+![Create Post](./screenshots/create-post.png)
+*Form for creating and editing blog posts*
+
+#### Sign Up
+![Sign Up](./screenshots/sign-up.png)
+*User registration page*
