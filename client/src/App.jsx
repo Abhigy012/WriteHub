@@ -3,6 +3,7 @@ import "./App.css";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import WriteHubLogo from './assets/WriteHub.png';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -45,7 +46,10 @@ function App() {
   return (
     <div className={`min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-200`}>
       <header className="bg-blue-600 dark:bg-gray-800 text-white p-4 flex justify-between items-center shadow-md sticky top-0 z-10">
-        <Link to="/" className="font-bold text-2xl tracking-tight drop-shadow-sm pl-2 focus:outline-none">My <span className="text-yellow-300 dark:text-yellow-400">Blog</span></Link>
+        <Link to="/" className="flex items-center gap-3 font-bold text-2xl tracking-tight drop-shadow-sm pl-2 focus:outline-none">
+          <img src={WriteHubLogo} alt="WriteHub Logo" className="h-8 w-auto" />
+          <span className="text-yellow-300 dark:text-yellow-400">WriteHub</span>
+        </Link>
         <nav className="flex gap-6 items-center">
           <Link to="/" className="hover:underline underline-offset-4 transition font-medium">Home</Link>
           <Link to="/all-posts" className="hover:underline underline-offset-4 transition font-medium">All Posts</Link>
@@ -73,7 +77,7 @@ function App() {
         <Outlet context={{ refreshUser, user }} />
       </main>
       <ToastContainer position="top-center" autoClose={3000} hideProgressBar theme="colored" />
-      <footer className="bg-gray-200 dark:bg-gray-800 text-center p-4 text-sm border-t border-gray-300 dark:border-gray-700 mt-8 shadow-inner text-gray-700 dark:text-gray-300">&copy; {new Date().getFullYear()} My Blog. Powered by MERN + Cloudinary.</footer>
+      <footer className="bg-gray-200 dark:bg-gray-800 text-center p-4 text-sm border-t border-gray-300 dark:border-gray-700 mt-8 shadow-inner text-gray-700 dark:text-gray-300">&copy; {new Date().getFullYear()} WriteHub. Powered by MERN + Cloudinary.</footer>
     </div>
   );
 }

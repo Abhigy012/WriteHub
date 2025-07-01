@@ -29,7 +29,7 @@ function Home() {
       {/* Hero Section */}
       <div className="w-full max-w-3xl flex flex-col items-center mb-10">
         <img src="/images/landing-hero.jpg" alt="Landing Hero" className="w-full max-h-72 object-cover rounded-lg shadow mb-6" />
-        <h1 className="text-3xl font-bold text-center mb-2 dark:text-white">Welcome to My Blog</h1>
+        <h1 className="text-3xl font-bold text-center mb-2 dark:text-white">Welcome to WriteHub</h1>
         <p className="text-center text-lg text-gray-700 dark:text-gray-300 mb-4">A simple MERN blog platform. Create, share, and explore posts from the community.</p>
       </div>
       {/* Posts Section */}

@@ -1,6 +1,6 @@
-# MegaBlog Frontend
+# WriteHub Frontend
 
-React frontend for the MegaBlog application, built with Vite and Tailwind CSS.
+React frontend for the WriteHub application, built with Vite and Tailwind CSS.
 
 ## 🚀 Quick Start
 
@@ -202,4 +202,4 @@ After deploying the frontend:
 
 ## 📄 License
 
-This project is part of the MegaBlog application and is licensed under the MIT License. 
+This project is part of the WriteHub application and is licensed under the MIT License. 
