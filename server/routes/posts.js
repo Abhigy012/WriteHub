@@ -58,6 +58,9 @@ router.get('/:id', async (req, res) => {
 // @access  Private
 router.post('/', protect, upload.single('image'), (req, res) => {
   try {
+    console.log('POST /api/posts accessed');
+    console.log('Request body:', req.body);
+    console.log('Request file:', req.file);
     if (!req.body.title || !req.body.content) return res.status(400).json({ message: 'Missing fields' });
     if (!req.file) {
       return res.status(400).json({ message: 'No image file uploaded' });
@@ -66,6 +69,7 @@ router.post('/', protect, upload.single('image'), (req, res) => {
       { resource_type: 'image', folder: 'blog_images' },
       (error, result) => {
         if (error) {
+          console.error('Cloudinary upload error:', error);
           return res.status(500).json({ message: 'Image upload failed' });
         }
         Post.create({
@@ -80,12 +84,14 @@ router.post('/', protect, upload.single('image'), (req, res) => {
             res.status(201).json(post);
           })
           .catch(err => {
+            console.error('Post.create error:', err);
             res.status(500).json({ message: 'Server error' });
           });
       }
     );
     uploadStream.end(req.file.buffer);
   } catch (err) {
+    console.error('POST /api/posts error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });

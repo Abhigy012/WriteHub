@@ -26,6 +26,10 @@ function AddPost() {
     data.append('content', form.content)
     data.append('status', form.status)
     if (image) data.append('image', image)
+    console.log('Submitting post to:', `${API_URL}/posts`)
+    for (let pair of data.entries()) {
+      console.log(pair[0]+ ':', pair[1]);
+    }
     fetch(`${API_URL}/posts`, {
       method: 'POST',
       credentials: 'include',
